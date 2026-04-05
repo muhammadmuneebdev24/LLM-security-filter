@@ -1,4 +1,4 @@
-## 🔍 Features
+##  Features
 
 -  Detects prompt injection attacks  
 -  Masks Personally Identifiable Information (PII) using Microsoft Presidio  
@@ -8,7 +8,7 @@
 
 ---
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
 - Python  
 - FastAPI  
