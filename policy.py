@@ -1,6 +1,6 @@
 def make_decision(text, injection, masked):
-    
-    # Step 1: If injection attack detected → BLOCK
+
+    # Step 1: Injection → BLOCK
     if injection:
         return {
             "decision": "BLOCK",
@@ -8,7 +8,7 @@ def make_decision(text, injection, masked):
             "output": None
         }
 
-    # Step 2: If masking happened → MASK
+    # Step 2: Masking → MASK
     if masked != text:
         return {
             "decision": "MASK",
@@ -16,7 +16,7 @@ def make_decision(text, injection, masked):
             "output": masked
         }
 
-    # Step 3: Otherwise → ALLOW
+    # Step 3: Clean → ALLOW
     return {
         "decision": "ALLOW",
         "reason": "Input is clean",

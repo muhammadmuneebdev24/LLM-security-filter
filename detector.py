@@ -1,5 +1,3 @@
-import re
-
 # List of suspicious phrases
 BAD_PATTERNS = [
     "ignore instructions",
@@ -13,9 +11,12 @@ BAD_PATTERNS = [
     "hack",
 ]
 
+
 def check_injection(text):
     text = text.lower()
+
     for pattern in BAD_PATTERNS:
         if pattern in text:
             return True   # Bad input found
-    return False          # Input is clean
+
+    return False  # Input is clean

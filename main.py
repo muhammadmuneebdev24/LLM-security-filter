@@ -1,26 +1,25 @@
-from fastapi import FastAPI, Request
-from fastapi.templating import Jinja2Templates
-from fastapi.responses import HTMLResponse
+from fastapi import FastAPI
 from pydantic import BaseModel
 
 from detector import check_injection
 from presidio_utils import mask_pii
 from policy import make_decision
 
-app = FastAPI()
-templates = Jinja2Templates(directory="templates")
+app = FastAPI(title="LLM Security Gateway API")
 
 
 # Input model
 class UserMessage(BaseModel):
     text: str
 
-# Frontend route (opens HTML page)
-@app.get("/", response_class=HTMLResponse)
-def home(request: Request):
-    return templates.TemplateResponse("frontend.html", {"request": request})
 
-# Backend API route
+# Root route (just to check API is running)
+@app.get("/")
+def home():
+    return {"message": "LLM Security Gateway API is running"}
+
+
+# Main API route
 @app.post("/check")
 def check_message(message: UserMessage):
     user_text = message.text
