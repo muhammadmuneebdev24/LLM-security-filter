@@ -10,7 +10,7 @@ anonymizer = AnonymizerEngine()
 # -------- CUSTOM RULES -------- #
 
 # API Key detector
-api_pattern = Pattern(
+apipattern = Pattern(
     name="api_key",
     regex=r"sk-[A-Za-z0-9]+",
     score=0.9
@@ -18,12 +18,12 @@ api_pattern = Pattern(
 
 api_recognizer = PatternRecognizer(
     supported_entity="API_KEY",
-    patterns=[api_pattern]
+    patterns=[apipattern]
 )
 
 
 # Pakistani phone number detector
-phone_pattern = Pattern(
+phpattern = Pattern(
     name="pk_phone",
     regex=r"\b03[0-9]{9}\b",
     score=0.85
@@ -31,12 +31,12 @@ phone_pattern = Pattern(
 
 phone_recognizer = PatternRecognizer(
     supported_entity="PK_PHONE",
-    patterns=[phone_pattern]
+    patterns=[phpattern]
 )
 
 
 # Employee ID detector
-emp_pattern = Pattern(
+emppattern = Pattern(
     name="emp_id",
     regex=r"EMP[0-9]+",
     score=0.85
@@ -44,7 +44,7 @@ emp_pattern = Pattern(
 
 emp_recognizer = PatternRecognizer(
     supported_entity="INTERNAL_ID",
-    patterns=[emp_pattern]
+    patterns=[emppattern]
 )
 
 
