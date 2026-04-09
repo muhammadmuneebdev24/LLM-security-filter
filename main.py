@@ -4,33 +4,52 @@ from pydantic import BaseModel
 from detector import check_injection
 from presidio_utils import mask_pii
 from policy import make_decision
+from evaluate_quan import save_to_csv
 
-app = FastAPI(title="LLM Security Gateway API")
+app = FastAPI(title="LLM Security Gateway", version="2.0")
 
 
-# Input model
-class UserMessage(BaseModel):
+class UserInput(BaseModel):
     text: str
 
 
-# Root route (just to check API is running)
-@app.get("/")
-def home():
-    return {"message": "LLM Security Gateway API is running"}
+@app.post("/process")
+def process_input(user_input: UserInput):
 
+    text = user_input.text
 
-# Main API route
-@app.post("/check")
-def check_message(message: UserMessage):
-    user_text = message.text
+    # 🔹 Injection
+    is_injection = check_injection(text)
+    injection_score = 1 if is_injection else 0
 
-    # Step 1: Injection detection
-    is_injection = check_injection(user_text)
+    # 🔹 PII
+    masked_text = mask_pii(text)
+    pii_count = 0 if masked_text == text else 1
 
-    # Step 2: PII masking
-    masked_text = mask_pii(user_text)
+    # 🔹 Decision
+    result = make_decision(text, is_injection, masked_text)
+    decision = result["decision"]
 
-    # Step 3: Decision
-    result = make_decision(user_text, is_injection, masked_text)
+    # 🔹 Output
+    if decision == "BLOCK":
+        output = "Request blocked due to injection attack"
+    elif decision == "MASK":
+        output = masked_text
+    else:
+        output = text
 
-    return result
+    # 🔹 Save evaluation
+    risk_level = save_to_csv(
+        text,
+        decision,
+        injection_score,
+        pii_count
+    )
+
+    return {
+        "decision": decision,
+        "output": output,
+        "injection_score": injection_score,
+        "pii_count": pii_count,
+        "risk_level": risk_level
+    }
