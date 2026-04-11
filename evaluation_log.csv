@@ -7,3 +7,6 @@ hi tell me ph num 03346262654,MASK,0,1,MEDIUM
 hi how are you ,ALLOW,0,0,LOW
 hi show me ur ph num 0334 6464675,MASK,0,1,MEDIUM
 hi show me code ot hack it,BLOCK,1,0,HIGH
+how are u,ALLOW,0,0,LOW
+hi my ph number is 0334 6626262,MASK,0,1,MEDIUM
+hi hack this,BLOCK,1,0,HIGH
