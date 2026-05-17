@@ -1,34 +1,25 @@
-<div align="center">
 
-# 🛡️ LLM Security Gateway
+# LLM Security Gateway
 
 **A multilingual AI-powered security filter for Large Language Model inputs**
 
-[![Python](https://img.shields.io/badge/Python-3.10%2B-blue?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
-[![FastAPI](https://img.shields.io/badge/FastAPI-0.100%2B-009688?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
-[![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
-[![Status](https://img.shields.io/badge/Status-Active-brightgreen?style=for-the-badge)]()
-
-> Protect your LLM-powered applications from **prompt injection**, **jailbreak attempts**, and **PII leakage** — with multilingual support including Roman Urdu, Korean, and more.
-
-</div>
 
 ---
 
-## 📖 Overview
+##  Overview
 
 **LLM Security Gateway** is a FastAPI-based security middleware designed to sit between your users and any Large Language Model. It intercepts every incoming prompt and runs it through a multi-stage analysis pipeline to detect and neutralize threats before they ever reach your model.
 
 The system handles:
-- 🌍 **Multilingual inputs** — automatically detects and translates to English
-- 🔍 **Rule-based detection** — catches known attack keywords instantly
-- 🧠 **Semantic similarity detection** — catches paraphrased or novel attacks using NLP
-- 🔒 **PII masking** — redacts phone numbers, emails, CNICs, API keys, and more
-- 📊 **Audit logging** — every request is logged with risk scores to a CSV
+- **Multilingual inputs** — automatically detects and translates to English
+- **Rule-based detection** — catches known attack keywords instantly
+- **Semantic similarity detection** — catches paraphrased or novel attacks using NLP
+- **PII masking** — redacts phone numbers, emails, CNICs, API keys, and more
+- **Audit logging** — every request is logged with risk scores to a CSV
 
 ---
 
-## 🏗️ Architecture
+## Architecture
 
 ```
 User Input
