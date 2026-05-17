@@ -1,24 +1,60 @@
-def make_decision(text, injection, masked):
+def make_decision(
+    text,
+    rule_score,
+    semantic_score,
+    masked_text
+):
 
-    # Step 1: Injection → BLOCK
-    if injection:
+    # -----------------------------
+    # FINAL RISK CALCULATION
+    # -----------------------------
+
+    final_risk = max(
+        rule_score,
+        semantic_score
+    )
+
+    # -----------------------------
+    # BLOCK CONDITIONS
+    # -----------------------------
+
+    # Strong semantic attack
+    if semantic_score >= 0.75:
         return {
             "decision": "BLOCK",
-            "reason": "Injection attack detected",
+            "reason": "Semantic injection detected",
+            "risk": final_risk,
             "output": None
         }
 
-    # Step 2: Masking → MASK
-    if masked != text:
+    # Strong rule attack
+    if rule_score == 1:
         return {
-            "decision": "MASK",
-            "reason": "Sensitive info was masked",
-            "output": masked
+            "decision": "BLOCK",
+            "reason": "Rule-based attack detected",
+            "risk": final_risk,
+            "output": None
         }
 
-    # Step 3: Clean → ALLOW
+    # -----------------------------
+    # MASK CONDITIONS
+    # -----------------------------
+
+    if masked_text != text:
+        return {
+            "decision": "MASK",
+            "reason": "Sensitive data detected",
+            "risk": final_risk,
+            "output": masked_text
+        }
+
+    # -----------------------------
+    # SAFE INPUT
+    # -----------------------------
+
     return {
         "decision": "ALLOW",
-        "reason": "Input is clean",
+        "reason": "Input is safe",
+        "risk": final_risk,
         "output": text
     }
