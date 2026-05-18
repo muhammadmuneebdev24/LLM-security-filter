@@ -19,7 +19,7 @@ def make_decision(
     # -----------------------------
 
     # Strong semantic attack
-    if semantic_score >= 0.75:
+    if semantic_score >= 0.70:
         return {
             "decision": "BLOCK",
             "reason": "Semantic injection detected",

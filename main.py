@@ -103,22 +103,13 @@ def process_input(user_input: UserInput):
     # -----------------------------------
 
     return {
-
         "original_text": text,
-
         "translated_text": translated_text,
-
         "language": language,
-
         "rule_score": rule_score,
-
         "semantic_score": semantic_score,
-
         "pii_count": pii_count,
-
         "decision": decision,
-
         "risk_level": risk_level,
-
         "output": output
     }
