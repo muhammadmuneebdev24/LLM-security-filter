@@ -11,16 +11,10 @@ app = FastAPI(
     version="3.0"
 )
 
-# -----------------------------------
-# INPUT MODEL
-# -----------------------------------
 
 class UserInput(BaseModel):
     text: str
 
-# -----------------------------------
-# MAIN ENDPOINT
-# -----------------------------------
 
 @app.post("/process")
 
@@ -28,9 +22,6 @@ def process_input(user_input: UserInput):
 
     text = user_input.text
 
-    # -----------------------------------
-    # STEP 1 — DETECTOR ANALYSIS
-    # -----------------------------------
 
     analysis = analyze_prompt(text)
 
@@ -42,19 +33,12 @@ def process_input(user_input: UserInput):
 
     semantic_score = analysis["semantic_score"]
 
-    # -----------------------------------
-    # STEP 2 — PII MASKING
-    # -----------------------------------
 
     masked_text = mask_pii(
         translated_text
     )
 
     pii_count = 0 if masked_text == translated_text else 1
-
-    # -----------------------------------
-    # STEP 3 — POLICY ENGINE
-    # -----------------------------------
 
     result = make_decision(
         translated_text,
@@ -64,10 +48,6 @@ def process_input(user_input: UserInput):
     )
 
     decision = result["decision"]
-
-    # -----------------------------------
-    # STEP 4 — FINAL OUTPUT
-    # -----------------------------------
 
     if decision == "BLOCK":
 
@@ -84,10 +64,6 @@ def process_input(user_input: UserInput):
 
         output = translated_text
 
-    # -----------------------------------
-    # STEP 5 — SAVE LOGS
-    # -----------------------------------
-
     risk_level = save_to_csv(
         text,
         translated_text,
@@ -97,10 +73,6 @@ def process_input(user_input: UserInput):
         semantic_score,
         pii_count
     )
-
-    # -----------------------------------
-    # FINAL RESPONSE
-    # -----------------------------------
 
     return {
         "original_text": text,

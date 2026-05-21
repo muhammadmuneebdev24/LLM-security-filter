@@ -10,17 +10,9 @@ from presidio_anonymizer.entities import (
     OperatorConfig
 )
 
-# -----------------------------------
-# INITIALIZE PRESIDIO
-# -----------------------------------
-
 analyzer = AnalyzerEngine()
 
 anonymizer = AnonymizerEngine()
-
-# -----------------------------------
-# API KEY DETECTOR
-# -----------------------------------
 
 api_pattern = Pattern(
     name="api_key",
@@ -33,10 +25,6 @@ api_recognizer = PatternRecognizer(
     patterns=[api_pattern]
 )
 
-# -----------------------------------
-# CNIC DETECTOR
-# -----------------------------------
-
 cnic_pattern = Pattern(
     name="pakistan_cnic",
     regex=r"\b[0-9]{5}-[0-9]{7}-[0-9]{1}\b",
@@ -47,10 +35,6 @@ cnic_recognizer = PatternRecognizer(
     supported_entity="PAKISTAN_CNIC",
     patterns=[cnic_pattern]
 )
-
-# -----------------------------------
-# EMAIL DETECTOR
-# -----------------------------------
 
 email_pattern = Pattern(
     name="custom_email",
@@ -63,10 +47,6 @@ email_recognizer = PatternRecognizer(
     patterns=[email_pattern]
 )
 
-# -----------------------------------
-# PHONE NUMBER DETECTOR
-# -----------------------------------
-
 phone_pattern = Pattern(
     name="pk_phone",
     regex=r"\b03[0-9]{9}\b",
@@ -77,10 +57,6 @@ phone_recognizer = PatternRecognizer(
     supported_entity="PK_PHONE",
     patterns=[phone_pattern]
 )
-
-# -----------------------------------
-# STUDENT ID DETECTOR
-# -----------------------------------
 
 student_pattern = Pattern(
     name="student_id",
@@ -93,10 +69,6 @@ student_recognizer = PatternRecognizer(
     patterns=[student_pattern]
 )
 
-# -----------------------------------
-# INTERNAL EMPLOYEE ID
-# -----------------------------------
-
 emp_pattern = Pattern(
     name="emp_id",
     regex=r"EMP[0-9]+",
@@ -107,10 +79,6 @@ emp_recognizer = PatternRecognizer(
     supported_entity="INTERNAL_ID",
     patterns=[emp_pattern]
 )
-
-# -----------------------------------
-# ADD ALL RECOGNIZERS
-# -----------------------------------
 
 analyzer.registry.add_recognizer(
     api_recognizer
@@ -135,10 +103,6 @@ analyzer.registry.add_recognizer(
 analyzer.registry.add_recognizer(
     emp_recognizer
 )
-
-# -----------------------------------
-# MAIN MASK FUNCTION
-# -----------------------------------
 
 def mask_pii(text):
 

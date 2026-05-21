@@ -5,21 +5,12 @@ def make_decision(
     masked_text
 ):
 
-    # -----------------------------
-    # FINAL RISK CALCULATION
-    # -----------------------------
-
     final_risk = max(
         rule_score,
         semantic_score
     )
 
-    # -----------------------------
-    # BLOCK CONDITIONS
-    # -----------------------------
-
-    # Strong semantic attack
-    if semantic_score >= 0.70:
+    if semantic_score >= 0.60:
         return {
             "decision": "BLOCK",
             "reason": "Semantic injection detected",
@@ -27,7 +18,6 @@ def make_decision(
             "output": None
         }
 
-    # Strong rule attack
     if rule_score == 1:
         return {
             "decision": "BLOCK",
@@ -36,10 +26,6 @@ def make_decision(
             "output": None
         }
 
-    # -----------------------------
-    # MASK CONDITIONS
-    # -----------------------------
-
     if masked_text != text:
         return {
             "decision": "MASK",
@@ -47,10 +33,6 @@ def make_decision(
             "risk": final_risk,
             "output": masked_text
         }
-
-    # -----------------------------
-    # SAFE INPUT
-    # -----------------------------
 
     return {
         "decision": "ALLOW",

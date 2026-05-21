@@ -5,10 +5,6 @@ from datetime import datetime
 CSV_FILE = "evaluation_log.csv"
 
 
-# -----------------------------------
-# CREATE CSV FILE
-# -----------------------------------
-
 def init_csv():
 
     if not os.path.exists(CSV_FILE):
@@ -29,11 +25,6 @@ def init_csv():
                 "Risk Level"
             ])
 
-
-# -----------------------------------
-# RISK LEVEL
-# -----------------------------------
-
 def get_risk(rule_score, semantic_score, pii_count):
 
     if semantic_score >= 0.75 or rule_score == 1:
@@ -44,10 +35,6 @@ def get_risk(rule_score, semantic_score, pii_count):
 
     return "LOW"
 
-
-# -----------------------------------
-# SAVE LOG
-# -----------------------------------
 
 def save_to_csv(
     original_text,
